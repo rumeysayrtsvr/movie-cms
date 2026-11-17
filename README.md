@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie CMS
 
-## Getting Started
+Filmleri, dizileri, oyuncuları ve kategorileri yönetmek için geliştirilmiş bir yönetim paneli.
 
-First, run the development server:
+![Dashboard](docs/dashboard.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Özellikler
+
+- **Dashboard**: film, dizi, kategori ve oyuncu sayıları ile afiş önizlemeleri
+- **Filmler ve Diziler**: ekleme, düzenleme, silme, afiş yükleme, oyuncu ve kategori atama
+- **Oyuncular** ve **Kategoriler** için CRUD işlemleri
+- Arama, filtreleme ve sayfalama
+- Supabase Auth ile giriş; `/admin` sayfaları sadece giriş yapmış kullanıcılara açık
+- Açık / koyu tema
+
+## Teknolojiler
+
+- [Next.js 16](https://nextjs.org) (App Router) + React 19 + TypeScript
+- [MUI](https://mui.com) ve Tailwind CSS
+- Redux Toolkit
+- React Hook Form + Zod
+- [Supabase](https://supabase.com) (veritabanı, kimlik doğrulama, depolama)
+
+## Kurulum
+
+1. Bağımlılıkları yükle:
+
+   ```bash
+   npm install
+   ```
+
+2. Proje kök dizininde `.env.local` dosyası oluştur ve Supabase bilgilerini ekle (Supabase panelinde **Project Settings → API**):
+
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://<proje-id>.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
+   SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
+   ```
+
+3. Geliştirme sunucusunu başlat:
+
+   ```bash
+   npm run dev
+   ```
+
+   Uygulama [http://localhost:3001](http://localhost:3001) adresinde açılır.
+
+4. Giriş yapmak için Supabase panelinde **Authentication → Users → Add user** ile bir kullanıcı oluştur.
+
+## Proje Yapısı
+
+```
+src/
+├── app/
+│   ├── admin/       # Panel sayfaları (dashboard, movies, tvshows, actors, categories)
+│   ├── api/         # API route'ları (Supabase ile konuşur)
+│   └── auth/        # Giriş sayfası
+├── components/      # Ortak arayüz bileşenleri
+├── features/        # Özelliğe göre gruplanmış bileşenler, hook'lar ve servisler
+├── hooks/
+├── lib/             # Supabase istemcileri, axios, Redux store
+├── types/
+└── middleware.ts    # /admin için oturum kontrolü
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Komutlar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Komut           | Açıklama                         |
+| --------------- | -------------------------------- |
+| `npm run dev`   | Geliştirme sunucusu (port 3001)  |
+| `npm run build` | Production derlemesi             |
+| `npm start`     | Production sunucusu              |
+| `npm run lint`  | ESLint kontrolü                  |
